@@ -10,14 +10,17 @@ let g:findpath_TemplateBeforePath = ''
 if !exists("g:findpath_DefaultConfigDir")
     let g:findpath_DefaultConfigDir = $HOME.'/.projectroot/'
 endif
-if !exists("g:findpath_DefaultConfigFile")
-    let g:findpath_DefaultConfigFile = '.projectroot'
+if !exists("g:findpath_root")
+    let g:findpath_root = ['.projectroot', '.git', '.hg', '.bzr']
 endif
 if !exists("g:findpath_DefaultList")
     let g:findpath_DefaultList = '~ProjectRoot-List~'
 endif
 if !exists("g:findpath_DefaultConfig")
     let g:findpath_DefaultConfig = '~config.vim'
+endif
+if !exists("g:findpath_CDLoop")
+    let g:findpath_CDLoop = 5
 endif
 
 " config
@@ -46,8 +49,50 @@ if !filereadable(s:findpath_DefaultList)
     call system('cp '.g:findpath_TemplateDir.g:findpath_DefaultList.' '.s:findpath_DefaultList)
 endif
 
+function! g:FPRoot()
+    return g:FP(g:findpath_root)
+endfunction
+
+function! g:FP(target)
+    let i = 0
+    let flg = 0
+    let org = getcwd()
+    let dir = org.'/'
+
+    if type(a:target) != 3
+        let target = [a:target]
+    else
+        let target = a:target
+    endif
+
+    while i < g:findpath_CDLoop
+        for e in target
+            if filereadable(dir.e) || isdirectory(dir.e)
+                exec 'silent cd '.dir
+                let dir = getcwd()
+                exec 'silent cd '.org
+                let flg = 1
+                break
+            endif
+        endfor
+
+        if flg == 0
+            let i = i + 1
+            let dir = dir.'../'
+        else
+            break
+        endif
+    endwhile
+
+    if i == g:findpath_CDLoop
+        return ''
+    else
+        return dir
+    endif
+endfunction
+
 if !exists('g:_FPOpen')
-    function g:_FPOpen(path)
+    function! g:_FPOpen(path)
         if g:findpath_UseUnite == 0
             e .
         else

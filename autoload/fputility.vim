@@ -3,15 +3,6 @@
 "VERSION:  0.9
 "LICENSE:  MIT
 
-function! fputility#GetGit(repo)
-    let i = matchlist(a:repo, '\v(.*)/(.*)')[2]
-    echo 'Start GetGit:'
-    call system('git clone git://github.com/'.a:repo.'.git')
-    call system('mv -f '.i.'/* ./')
-    call system('rm -rf '.i)
-    echo 'GetGit Done!'
-endfunction
-
 function! fputility#Delete(path)
     if filereadable(a:path)
         let cmd = 'rm -rf '.a:path
@@ -71,7 +62,7 @@ function! fputility#PathAbs(...)
 endfunction
 function! fputility#_PathAbs(...)
     let orgdir = expand('%:p:h')
-    let root = fpcd#RootPath()
+    let root = g:FPRoot()
     let base = getline('.')
     let org = base
     let prefix = ''
@@ -139,7 +130,7 @@ function! fputility#_PathAbs(...)
 endfunction
 
 function! fputility#CustomCmds(...)
-    let root = fpcd#RootPath()
+    let root = g:FPRoot()
     if root != ''
         let cmds = root.'/'.'.vimcmds'
         if a:0 != 0

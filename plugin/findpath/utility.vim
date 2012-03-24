@@ -1,7 +1,6 @@
 "AUTHOR:   Atsushi Mizoue <asionfb@gmail.com>
-"WEBSITE:  https://github.com/AtsushiM/ProjectRoot.vim
+"WEBSITE:  https://github.com/AtsushiM/findpath.vim
 "VERSION:  0.9
 "LICENSE:  MIT
 
-command! -nargs=* -range FPPathAbs <line1>,<line2>call fputility#PathAbs(<f-args>)
-command! -nargs=? FPCustomCmds call fputility#CustomCmds(<f-args>)
+command! -nargs=? FPCustokCmds call fputility#CustomCmds(<f-args>)

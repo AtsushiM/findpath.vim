@@ -9,6 +9,16 @@ let s:findpath_ListNo = 0
 let s:findpath_ListOpen = 0
 let s:findpath_DefaultList = g:findpath_DefaultConfigDir.g:findpath_DefaultList
 
+function! fp#Delete(path)
+    if filereadable(a:path)
+        let cmd = 'rm -rf '.a:path
+        call system(cmd)
+        echo cmd
+    else
+        echo 'No File: '.a:path
+    endif
+endfunction
+
 function! fp#ConfigOpen()
     exec g:findpath_ConfigWindowSize.' '.g:findpath_DefaultConfigDir.g:findpath_DefaultConfig
     let s:findpath_ConfigOpen = 1
@@ -76,7 +86,7 @@ function! fp#ProjectFileDelete()
     let path = getline('.')
     let path = path.'/'.g:findpath_DefaultConfigFile
     echo path
-    call fputility#Delete(path)
+    call fp#Delete(path)
 endfunction
 
 function! fp#SetBufMapProjectList()

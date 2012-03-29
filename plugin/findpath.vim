@@ -56,8 +56,7 @@ endfunction
 function! g:FP(target)
     let i = 0
     let flg = 0
-    let org = getcwd()
-    let dir = org.'/'
+    let dir = expand('%:p:h').'/'
 
     if type(a:target) != 3
         let target = [a:target]
@@ -68,9 +67,7 @@ function! g:FP(target)
     while i < g:findpath_CDLoop
         for e in target
             if filereadable(dir.e) || isdirectory(dir.e)
-                exec 'silent cd '.dir
-                let dir = getcwd()
-                exec 'silent cd '.org
+                let dir = fnamemodify(dir, ':p')
                 let flg = 1
                 break
             endif

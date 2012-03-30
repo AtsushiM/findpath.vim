@@ -4,6 +4,7 @@
 "LICENSE:  MIT
 
 let g:findpath_PluginDir = expand('<sfile>:p:h:h').'/'
+let g:findpath_DefaultConfigFile = '.projectroot'
 let g:findpath_TemplateDir = g:findpath_PluginDir.'template/'
 let g:findpath_TemplateBeforePath = ''
 

@@ -121,7 +121,7 @@ if g:findpath_UseUnite == 1
       \   "word": v:val,
       \   "source": "project",
       \   "kind": "command",
-      \   "action__command": "cd ".v:val."|Unite -input=".v:val."/ file",
+      \   "action__command": "cd ".v:val."|Unite -input=".v:val."/ file file/new",
       \ }')
     endfunction
     call unite#define_source(s:unite_source)

@@ -3,6 +3,14 @@
 "VERSION:  0.9
 "LICENSE:  MIT
 
+if exists("g:loaded_findpath")
+    finish
+endif
+let g:loaded_findpath = 1
+
+let s:save_cpo = &cpo
+set cpo&vim
+
 let g:findpath_PluginDir = expand('<sfile>:p:h:h').'/'
 let g:findpath_DefaultConfigFile = '.projectroot'
 let g:findpath_TemplateDir = g:findpath_PluginDir.'template/'
@@ -127,3 +135,5 @@ if g:findpath_UseUnite == 1
     call unite#define_source(s:unite_source)
     unlet s:unite_source
 endif
+
+let &cpo = s:save_cpo

@@ -3,6 +3,9 @@
 "VERSION:  0.9
 "LICENSE:  MIT
 
+let s:save_cpo = &cpo
+set cpo&vim
+
 let s:findpath_ConfigNo = 0
 let s:findpath_ConfigOpen = 0
 let s:findpath_ListNo = 0
@@ -101,3 +104,5 @@ function! fp#SetBufMapConfig()
     nnoremap <buffer><silent> q :bw %<CR>
     nnoremap <buffer><silent> q :call fp#ConfigClose()<CR>
 endfunction
+
+let &cpo = s:save_cpo
